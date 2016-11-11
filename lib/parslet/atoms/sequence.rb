@@ -15,10 +15,10 @@ class Parslet::Atoms::Sequence < Parslet::Atoms::Base
     }
   end
   
-  def >>(parslet)
+  def <<(parslet)
     self.class.new(* @parslets+[parslet])
   end
-  
+
   def try(source, context, consume_all)
     # Presize an array
     result = Array.new(parslets.size + 1)

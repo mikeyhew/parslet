@@ -46,13 +46,18 @@ module Parslet::Atoms::DSL
     Parslet::Atoms::Ignored.new(self)
   end
 
-  # Chains two parslet atoms together as a sequence. 
+  # Chains two parslet atoms together as a sequence, with no whitespace in between.
   #
   # Example: 
-  #   str('a') >> str('b')
+  #   str('a') << str('b')
   #
-  def >>(parslet)
+  def <<(parslet)
     Parslet::Atoms::Sequence.new(self, parslet)
+  end
+
+  # Chains two parslet atoms together as a sequence, allowing whitespace in between
+  def >>(parslet)
+    self << Parslet::Atoms::Str.new(' ').repeat << parslet
   end
 
   # Chains two parslet atoms together to express alternation. A match will
